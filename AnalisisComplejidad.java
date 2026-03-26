@@ -14,9 +14,10 @@ public class AnalisisComplejidad {
     // Complejidad: O(n) - tenemos que ver todos los elementos
     
     // Fragmento 2: Verifica si un número es primo
-    // Solo revisamos hasta la raíz cuadrada del número O(√n)
+    // Solo revisamos hasta la raíz cuadrada del número
+    // El if base es O(1), pero el bucle siempre es O(√n)
     public static boolean esPrimo(int numero) {
-        if (numero <= 1) return false;
+        if (numero <= 1) return false;  // O(1)
         for (int i = 2; i <= Math.sqrt(numero); i++) {
             if (numero % i == 0) {
                 return false; // Encontramos un divisor, no es primo
@@ -24,10 +25,11 @@ public class AnalisisComplejidad {
         }
         return true;
     }
-    // Complejidad: O(√n) - eficiente porque no revisamos todos los números
+    // Complejidad: O(√n) - mucho más eficiente que revisar todos los números
     
     // Fragmento 3: Imprime una matriz fila por fila
     // Dos bucles anidados = n filas × m columnas
+    // Total: O(n*m), y O(n^2) cuando es matriz cuadrada
     public static void imprimirMatriz(int[][] matriz) {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
@@ -36,7 +38,7 @@ public class AnalisisComplejidad {
             System.out.println(); // Nueva línea después de cada fila
         }
     }
-    // Complejidad: O(n×m) - visitamos cada elemento de la matriz
+    // Complejidad: O(n*m) - visitamos cada elemento; O(n^2) para matrices cuadradas
     
     // Fragmento 4: Búsqueda binaria (requiere array ordenado)
     // Dividimos el espacio de búsqueda a la mitad cada vez O(log n)
