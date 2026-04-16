@@ -1,0 +1,14 @@
+public class SumaNpares {
+    public int sumaPares(int n) {
+    if (n == 0) return 0;
+    return (2 * n) + sumaPares(n - 1);
+}
+ 
+    public static void main(String[] args) {
+        SumaNpares suma = new SumaNpares();
+        int n = 4; // El número puede variar según lo que se quiera calcular
+        int resultado = suma.sumaPares(n);
+        System.out.println("La suma de los primeros " + n + " números pares es: " + resultado);
+    }
+
+}
