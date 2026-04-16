@@ -1,6 +1,6 @@
 /**
  * archivo: contarletra
- * cuenta cuántas veces aparece una letra en un texto.
+ * este archivo cuenta, pues, cuántas veces sale una letra en un texto.
  */
 public class ContarLetra {
     public int contarLetra(String texto, char letra) {
@@ -11,8 +11,8 @@ public class ContarLetra {
  
     public static void main(String[] args) {
         ContarLetra contar = new ContarLetra();
-        String texto = "Banana"; // el texto puede variar según lo que se quiera contar
-        char letra = 'a'; // la letra puede variar según lo que se quiera contar
+        String texto = "Banana"; // el texto puede variar según lo que se quiera contar, parce
+        char letra = 'a'; // la letra puede variar según lo que se quiera contar, pues
         int resultado = contar.contarLetra(texto, letra);
         System.out.println("La letra '" + letra + "' aparece " + resultado + " veces en el texto \"" + texto + "\".");
     }

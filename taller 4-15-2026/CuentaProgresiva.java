@@ -1,6 +1,6 @@
 /**
  * archivo: cuentaprogresiva
- * muestra una cuenta progresiva por recursión.
+ * este archivo hace una cuenta progresiva por recursión, así bien simple.
  */
 public class CuentaProgresiva {
     public void cuenta(int n) {
@@ -11,7 +11,7 @@ public class CuentaProgresiva {
  
     public static void main(String[] args) {
         CuentaProgresiva cuenta = new CuentaProgresiva();
-        int n = 5; // el número puede variar según lo que se quiera contar
+        int n = 5; // el número puede variar según lo que se quiera contar, pues
         System.out.println("Contando de 1 a " + n + ":");
         cuenta.cuenta(n);
     }

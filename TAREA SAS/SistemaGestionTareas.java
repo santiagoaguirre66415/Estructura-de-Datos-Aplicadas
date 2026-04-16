@@ -3,7 +3,7 @@ package TAREA_SAS;
 import java.util.ArrayList;
 
 /**
- * Sistema centralizado para administrar una colección de tareas
+ * sistema centralizado para administrar una colección de tareas, bien ordenadito.
  */
 public class SistemaGestionTareas {
 
@@ -11,7 +11,7 @@ public class SistemaGestionTareas {
     private int proximoId;
 
     /**
-     * Constructor que inicializa el sistema de gestión de tareas
+     * constructor que inicializa el sistema de gestión de tareas, pues.
      */
     public SistemaGestionTareas() {
         this.tareas = new ArrayList<>();
@@ -19,8 +19,8 @@ public class SistemaGestionTareas {
     }
 
     /**
-     * Agrega una nueva tarea al sistema
-     * Complejidad: O(1) amortizado
+     * agrega una nueva tarea al sistema.
+     * complejidad: O(1) amortizado.
      * @param descripcion texto con la descripción de la tarea
      * @param prioridad nivel de urgencia (1-5)
      */
@@ -35,8 +35,8 @@ public class SistemaGestionTareas {
     }
 
     /**
-     * Lista todas las tareas en el sistema
-     * Complejidad: O(n)
+     * lista todas las tareas en el sistema.
+     * complejidad: O(n).
      */
     public void listarTareas() {
         if (tareas.isEmpty()) {
@@ -49,8 +49,8 @@ public class SistemaGestionTareas {
     }
 
     /**
-     * Busca una tarea específica por su identificador
-     * Complejidad: O(n)
+     * busca una tarea específica por su identificador.
+     * complejidad: O(n).
      * @param id identificador de la tarea
      * @return la Tarea encontrada o null si no existe
      */
@@ -64,8 +64,8 @@ public class SistemaGestionTareas {
     }
 
     /**
-     * Marca una tarea como completada
-     * Complejidad: O(n)
+     * marca una tarea como completada.
+     * complejidad: O(n).
      * @param id identificador de la tarea a marcar
      */
     public void marcarCompletada(int id) {
@@ -79,8 +79,8 @@ public class SistemaGestionTareas {
     }
 
     /**
-     * Elimina una tarea del sistema
-     * Complejidad: O(n)
+     * elimina una tarea del sistema.
+     * complejidad: O(n).
      * @param id identificador de la tarea a eliminar
      */
     public void eliminarTarea(int id) {
@@ -95,8 +95,8 @@ public class SistemaGestionTareas {
     }
 
     /**
-     * Obtiene todas las tareas pendientes (no completadas)
-     * Complejidad: O(n)
+     * obtiene todas las tareas pendientes (no completadas).
+     * complejidad: O(n).
      */
     public void obtenerTareasPendientes() {
         ArrayList<Tarea> pendientes = new ArrayList<>();
@@ -115,8 +115,8 @@ public class SistemaGestionTareas {
     }
 
     /**
-     * Obtiene todas las tareas con una prioridad específica
-     * Complejidad: O(n)
+     * obtiene todas las tareas con una prioridad específica.
+     * complejidad: O(n).
      * @param prioridad nivel de urgencia a filtrar
      */
     public void obtenerTareasPorPrioridad(int prioridad) {
@@ -141,8 +141,8 @@ public class SistemaGestionTareas {
     }
 
     /**
-     * Retorna el número total de tareas en el sistema
-     * Complejidad: O(1)
+     * retorna el número total de tareas en el sistema.
+     * complejidad: O(1).
      * @return cantidad de tareas
      */
     public int obtenerTotalTareas() {
@@ -150,8 +150,8 @@ public class SistemaGestionTareas {
     }
 
     /**
-     * Verifica si el sistema no contiene tareas
-     * Complejidad: O(1)
+     * verifica si el sistema no contiene tareas.
+     * complejidad: O(1).
      * @return true si está vacío, false en caso contrario
      */
     public boolean estaVacio() {

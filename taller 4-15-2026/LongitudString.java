@@ -1,6 +1,6 @@
 /**
  * archivo: longitudstring
- * calcula la longitud de un texto por recursión.
+ * este archivo saca la longitud de un texto por recursión, bien sencillo.
  */
 public class LongitudString {
     public int longitud(String s) {
@@ -10,7 +10,7 @@ public class LongitudString {
  
     public static void main(String[] args) {
         LongitudString longitud = new LongitudString();
-        String s = "Hola Mundo"; // el string puede variar según lo que se quiera medir
+        String s = "Hola Mundo"; // el string puede variar según lo que se quiera medir, pues
         int resultado = longitud.longitud(s);
         System.out.println("La longitud del string \"" + s + "\" es: " + resultado);
     }

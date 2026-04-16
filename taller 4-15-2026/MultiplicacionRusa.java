@@ -1,7 +1,7 @@
 import java.util.Scanner;
 /**
  * archivo: multiplicacionrusa
- * multiplica por suma repetida.
+ * este archivo multiplica por suma repetida, sin darle tantas vueltas.
  */
 public class MultiplicacionRusa {
     public int multiplicar(int a, int b) {

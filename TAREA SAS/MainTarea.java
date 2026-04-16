@@ -1,12 +1,12 @@
 package TAREA_SAS;
 
 /**
- * Clase principal que contiene el método main para probar el sistema
+ * clase principal que deja correr las pruebas del sistema, bien al estilo paisa.
  */
 public class MainTarea {
 
     /**
-     * Método principal que ejecuta las pruebas del sistema
+    * método principal que ejecuta las pruebas del sistema, parcero.
      * @param args argumentos de línea de comandos (no utilizados)
      */
     public static void main(String[] args) {
@@ -16,7 +16,7 @@ public class MainTarea {
         System.out.println("SISTEMA DE GESTIÓN DE TAREAS");
         System.out.println("=================================\n");
         
-        // PRUEBA 1: Agregar tareas válidas
+        // prueba 1: agregar tareas válidas, pues
         System.out.println("--- PRUEBA 1: Agregar tareas válidas ---");
         sistema.agregarTarea("Comprar alimentos para la semana", 3);
         sistema.agregarTarea("Estudiar para el examen de matemáticas", 1);
@@ -25,11 +25,11 @@ public class MainTarea {
         sistema.agregarTarea("Leer un libro", 5);
         System.out.println("Total de tareas: " + sistema.obtenerTotalTareas());
         
-        // PRUEBA 2: Listar todas las tareas
+        // prueba 2: listar todas las tareas, sin enredos
         System.out.println("\n--- PRUEBA 2: Listar todas las tareas ---");
         sistema.listarTareas();
         
-        // PRUEBA 3: Buscar por ID existente
+        // prueba 3: buscar por id existente, ahí mismo
         System.out.println("\n--- PRUEBA 3: Buscar tarea con ID 3 ---");
         Tarea tareaEncontrada = sistema.buscarPorId(3);
         if (tareaEncontrada != null) {
@@ -38,7 +38,7 @@ public class MainTarea {
             System.out.println("Tarea no encontrada");
         }
         
-        // PRUEBA 4: Buscar por ID no existente
+        // prueba 4: buscar por id no existente, para probar bien
         System.out.println("\n--- PRUEBA 4: Buscar tarea con ID 99 (no existe) ---");
         tareaEncontrada = sistema.buscarPorId(99);
         if (tareaEncontrada != null) {
@@ -47,49 +47,49 @@ public class MainTarea {
             System.out.println("Tarea no encontrada - Resultado esperado");
         }
         
-        // PRUEBA 5: Marcar tareas como completadas
+        // prueba 5: marcar tareas como completadas, pues
         System.out.println("\n--- PRUEBA 5: Marcar tareas como completadas ---");
         sistema.marcarCompletada(1);
         sistema.marcarCompletada(3);
         sistema.marcarCompletada(99);
         
-        // PRUEBA 6: Ver tareas pendientes
+        // prueba 6: ver tareas pendientes, a ver qué quedó faltando
         System.out.println("\n--- PRUEBA 6: Ver tareas pendientes ---");
         sistema.obtenerTareasPendientes();
         
-        // PRUEBA 7: Ver tareas por prioridad
+        // prueba 7: ver tareas por prioridad, bien juicioso
         System.out.println("\n--- PRUEBA 7: Ver tareas por prioridad ---");
         sistema.obtenerTareasPorPrioridad(1);
         sistema.obtenerTareasPorPrioridad(5);
         sistema.obtenerTareasPorPrioridad(6);
         
-        // PRUEBA 8: Eliminar una tarea
+        // prueba 8: eliminar una tarea, para ver la vuelta
         System.out.println("\n--- PRUEBA 8: Eliminar tarea ID 5 ---");
         sistema.eliminarTarea(5);
         System.out.println("Total de tareas después de eliminar: " + sistema.obtenerTotalTareas());
         
-        // PRUEBA 9: Ver todas las tareas después de eliminar
+        // prueba 9: ver todas las tareas después de eliminar, pues
         System.out.println("\n--- PRUEBA 9: Listar tareas después de eliminar ---");
         sistema.listarTareas();
         
-        // PRUEBA 10: Agregar tarea con prioridad inválida
+        // prueba 10: agregar tarea con prioridad inválida, a ver que responda
         System.out.println("\n--- PRUEBA 10: Agregar tarea con prioridad inválida ---");
         sistema.agregarTarea("Tarea con prioridad 6", 6);
         sistema.agregarTarea("Tarea con prioridad 0", 0);
         
-        // PRUEBA 11: Verificar IDs automáticos
+        // prueba 11: verificar ids automáticos, sin truco
         System.out.println("\n--- PRUEBA 11: Verificar IDs automáticos ---");
         sistema.agregarTarea("Nueva tarea después de eliminaciones", 2);
         sistema.listarTareas();
         
-        // PRUEBA 12: Marcar todas como completadas y ver pendientes
+        // prueba 12: marcar todas como completadas y ver pendientes, bien bacano
         System.out.println("\n--- PRUEBA 12: Marcar todas como completadas ---");
         sistema.marcarCompletada(2);
         sistema.marcarCompletada(4);
         sistema.marcarCompletada(6);
         sistema.obtenerTareasPendientes();
         
-        // PRUEBA 13: Verificar estado del sistema
+        // prueba 13: verificar estado del sistema, ya para cerrar
         System.out.println("\n--- PRUEBA 13: Estado final del sistema ---");
         System.out.println("Total de tareas: " + sistema.obtenerTotalTareas());
         System.out.println("¿Sistema vacío? " + (sistema.estaVacio() ? "Sí" : "No"));
