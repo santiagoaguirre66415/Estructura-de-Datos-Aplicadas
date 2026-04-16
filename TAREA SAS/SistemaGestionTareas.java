@@ -3,7 +3,7 @@ package TAREA_SAS;
 import java.util.ArrayList;
 
 /**
- * sistema centralizado para administrar una colección de tareas, bien ordenadito.
+ * sistema centralizado para administrar una colección de tareas.
  */
 public class SistemaGestionTareas {
 
@@ -11,7 +11,7 @@ public class SistemaGestionTareas {
     private int proximoId;
 
     /**
-     * constructor que inicializa el sistema de gestión de tareas, pues.
+    * constructor que inicializa el sistema de gestión de tareas.
      */
     public SistemaGestionTareas() {
         this.tareas = new ArrayList<>();

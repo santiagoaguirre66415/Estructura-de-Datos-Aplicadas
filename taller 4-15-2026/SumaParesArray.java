@@ -1,6 +1,6 @@
 /**
  * archivo: sumaparesarray
- * este archivo suma los valores pares de un arreglo por recursión, sin enredarse.
+ * este archivo suma los valores pares de un arreglo por recursión.
  */
 public class SumaParesArray {
     public int sumaParesArray(int[] arr, int i) {
@@ -11,7 +11,7 @@ public class SumaParesArray {
  
     public static void main(String[] args) {
         SumaParesArray sumaPares = new SumaParesArray();
-        int[] arr = {1, 2, 3, 4, 5}; // el arreglo puede variar según lo que se quiera calcular, parce
+        int[] arr = {1, 2, 3, 4, 5}; // el arreglo puede variar según lo que se quiera calcular
         int resultado = sumaPares.sumaParesArray(arr, 0);
         System.out.println("La suma de los números pares en el arreglo es: " + resultado);
     }
