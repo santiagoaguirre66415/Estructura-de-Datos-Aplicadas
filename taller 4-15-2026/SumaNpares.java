@@ -1,3 +1,7 @@
+/**
+ * archivo: sumanpares
+ * suma los primeros n números pares por recursión.
+ */
 public class SumaNpares {
     public int sumaPares(int n) {
     if (n == 0) return 0;
@@ -6,7 +10,7 @@ public class SumaNpares {
  
     public static void main(String[] args) {
         SumaNpares suma = new SumaNpares();
-        int n = 4; // El número puede variar según lo que se quiera calcular
+        int n = 4; // el número puede variar según lo que se quiera calcular
         int resultado = suma.sumaPares(n);
         System.out.println("La suma de los primeros " + n + " números pares es: " + resultado);
     }

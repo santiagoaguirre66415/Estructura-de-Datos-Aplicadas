@@ -1,7 +1,11 @@
+/**
+ * archivo: analisis de complejidad
+ * reúne ejemplos breves de complejidad algorítmica.
+ */
 public class AnalisisComplejidad {
     
-    // Fragmento 1: Encontrar el máximo en un array
-    // Recorremos todo el array una sola vez O(n)
+    // fragmento 1: encontrar el máximo en un array
+    // recorremos todo el array una sola vez O(n)
     public static int encontrarMaximo(int[] array) {
         int max = array[0];
         for (int i = 1; i < array.length; i++) {
@@ -11,11 +15,11 @@ public class AnalisisComplejidad {
         }
         return max;
     }
-    // Complejidad: O(n) - tenemos que ver todos los elementos
+    // complejidad: O(n) - tenemos que ver todos los elementos
     
-    // Fragmento 2: Verifica si un número es primo
-    // Solo revisamos hasta la raíz cuadrada del número
-    // El if base es O(1), pero el bucle siempre es O(√n)
+    // fragmento 2: verifica si un número es primo
+    // solo revisamos hasta la raíz cuadrada del número
+    // el if base es O(1), pero el bucle siempre es O(√n)
     public static boolean esPrimo(int numero) {
         if (numero <= 1) return false;  // O(1)
         for (int i = 2; i <= Math.sqrt(numero); i++) {
@@ -25,43 +29,43 @@ public class AnalisisComplejidad {
         }
         return true;
     }
-    // Complejidad: O(√n) - mucho más eficiente que revisar todos los números
+    // complejidad: O(√n) - mucho más eficiente que revisar todos los números
     
-    // Fragmento 3: Imprime una matriz fila por fila
-    // Dos bucles anidados = n filas × m columnas
-    // Total: O(n*m), y O(n^2) cuando es matriz cuadrada
+    // fragmento 3: imprime una matriz fila por fila
+    // dos bucles anidados = n filas × m columnas
+    // total: O(n*m), y O(n^2) cuando es matriz cuadrada
     public static void imprimirMatriz(int[][] matriz) {
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[i].length; j++) {
-                System.out.print(matriz[i][j] + " ");
+        for (int[] fila : matriz) {
+            for (int valor : fila) {
+                System.out.print(valor + " ");
             }
-            System.out.println(); // Nueva línea después de cada fila
+            System.out.println(); // nueva línea después de cada fila
         }
     }
-    // Complejidad: O(n*m) - visitamos cada elemento; O(n^2) para matrices cuadradas
+    // complejidad: O(n*m) - visitamos cada elemento; O(n^2) para matrices cuadradas
     
-    // Fragmento 4: Búsqueda binaria (requiere array ordenado)
-    // Dividimos el espacio de búsqueda a la mitad cada vez O(log n)
+    // fragmento 4: búsqueda binaria (requiere array ordenado)
+    // dividimos el espacio de búsqueda a la mitad cada vez O(log n)
     public static int busquedaBinaria(int[] array, int objetivo) {
         int izquierda = 0;
         int derecha = array.length - 1;
         
         while (izquierda <= derecha) {
-            int medio = izquierda + (derecha - izquierda) / 2; // Evita overflow
+            int medio = izquierda + (derecha - izquierda) / 2; // evita overflow
             
             if (array[medio] == objetivo) {
-                return medio; // ¡Encontrado!
+                return medio; // ¡encontrado!
             } else if (array[medio] < objetivo) {
-                izquierda = medio + 1; // Buscar a la derecha
+                izquierda = medio + 1; // buscar a la derecha
             } else {
-                derecha = medio - 1; // Buscar a la izquierda
+                derecha = medio - 1; // buscar a la izquierda
             }
         }
-        return -1; // No encontrado
+        return -1; // no encontrado
     }
-    // Complejidad: O(log n) - muy eficiente, cortamos el problema a la mitad
+    // complejidad: O(log n) - muy eficiente, cortamos el problema a la mitad
     
     public static void main(String[] args) {
-        // Ejemplos de uso
+        // ejemplos de uso
     }
 }

@@ -1,4 +1,8 @@
 import java.util.Scanner;
+/**
+ * archivo: multiplicacionrusa
+ * multiplica por suma repetida.
+ */
 public class MultiplicacionRusa {
     public int multiplicar(int a, int b) {
     if (b == 0) return 0;
@@ -7,17 +11,16 @@ public class MultiplicacionRusa {
  
     public static void main(String[] args) {
         MultiplicacionRusa multiplicacion = new MultiplicacionRusa();
-        Scanner scanner = new java.util.Scanner(System.in);
-        
-        System.out.print("Ingrese el primer número: ");
-        int a = scanner.nextInt();
-        
-        System.out.print("Ingrese el segundo número: ");
-        int b = scanner.nextInt();
-        
-        int resultado = multiplicacion.multiplicar(a, b);
-        System.out.println("El resultado de la multiplicación rusa es: " + resultado);
-        
+        try (Scanner scanner = new java.util.Scanner(System.in)) {
+            System.out.print("Ingrese el primer número: ");
+            int a = scanner.nextInt();
+            
+            System.out.print("Ingrese el segundo número: ");
+            int b = scanner.nextInt();
+            
+            int resultado = multiplicacion.multiplicar(a, b);
+            System.out.println("El resultado de la multiplicación rusa es: " + resultado);
+        }
         
     }
  }

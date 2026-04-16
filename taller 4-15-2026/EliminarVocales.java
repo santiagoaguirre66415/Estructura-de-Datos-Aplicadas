@@ -1,3 +1,7 @@
+/**
+ * archivo: eliminarvocales
+ * elimina las vocales de una cadena por recursión.
+ */
 public class EliminarVocales {
     public String sinVocales(String s) {
     if (s.isEmpty()) return ""; 
@@ -8,7 +12,7 @@ public class EliminarVocales {
 }
 public static void main(String[] args) {
     EliminarVocales eliminar = new EliminarVocales();
-    String s = "Escuela"; // El string puede variar según lo que se quiera modificar
+    String s = "Escuela"; // el string puede variar según lo que se quiera modificar
     String resultado = eliminar.sinVocales(s);
     System.out.println("El string sin vocales es: \"" + resultado + "\".");
 }

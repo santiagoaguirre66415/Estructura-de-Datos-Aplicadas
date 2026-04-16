@@ -1,3 +1,7 @@
+/**
+ * archivo: eliminarprimercaracter
+ * elimina la primera aparición de una letra en un texto.
+ */
 public class EliminarPrimerCaracter {
     public String eliminarPrimero(String texto, char letra) {
     if (texto.isEmpty()) return "";
@@ -7,8 +11,8 @@ public class EliminarPrimerCaracter {
  
     public static void main(String[] args) {
         EliminarPrimerCaracter eliminar = new EliminarPrimerCaracter();
-        String texto = "Manzana"; // El texto puede variar según lo que se quiera modificar
-        char letra = 'a'; // La letra puede variar según lo que se quiera eliminar
+        String texto = "Manzana"; // el texto puede variar según lo que se quiera modificar
+        char letra = 'a'; // la letra puede variar según lo que se quiera eliminar
         String resultado = eliminar.eliminarPrimero(texto, letra);
         System.out.println("El texto después de eliminar la primera aparición de '" + letra + "' es: \"" + resultado + "\".");
     }
