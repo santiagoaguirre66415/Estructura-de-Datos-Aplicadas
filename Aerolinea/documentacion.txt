@@ -1,0 +1,496 @@
+================================================================================
+   DOCUMENTACION DEL PROYECTO - SISTEMA DE GESTION DE AEROLINEA
+================================================================================
+
+Ubicacion del proyecto: Aerolinea/src/
+
+Este documento explica que hace cada funcion del sistema, donde esta ubicada
+y como se relacionan las distintas partes del proyecto.
+
+================================================================================
+CLASE: Pasajero.java
+================================================================================
+Archivo: src/Pasajero.java
+
+Representa a una persona que viaja en un vuelo. Es la entidad mas basica
+del sistema.
+
+Atributos:
+  - id (int): Numero unico que el sistema le asigna a cada pasajero automaticamente.
+  - nombre (String): El nombre completo de la persona.
+  - documento (String): Su numero de cedula o documento de identidad.
+    Este es el dato clave que usamos para buscar y cancelar reservas.
+  - nacionalidad (String): De donde es la persona (ej: "Colombiano").
+
+Metodos:
+  - Pasajero(int id, String nombre, String documento, String nacionalidad)
+      Constructor. Crea un pasajero con todos sus datos.
+
+  - getId() -> int
+      Devuelve el id del pasajero.
+
+  - getNombre() -> String
+      Devuelve el nombre del pasajero.
+
+  - getDocumento() -> String
+      Devuelve el documento. Este es el dato que usamos para identificar
+      al pasajero cuando buscamos o cancelamos reservas.
+
+  - getNacionalidad() -> String
+      Devuelve la nacionalidad del pasajero.
+
+  - toString() -> String
+      Muestra todos los datos del pasajero en formato texto.
+
+
+================================================================================
+CLASE: Vuelo.java
+================================================================================
+Archivo: src/Vuelo.java
+
+Representa un vuelo de la aerolinea. Cada vuelo tiene dos estructuras de datos
+muy importantes dentro:
+
+  - listaPasajeros (ArrayList): los que ya tienen asiento confirmado (LISTA).
+  - listaEspera (Queue con LinkedList): los que estan esperando que se libere
+    un asiento. Funciona como una cola de verdad: el primero que llega es el
+    primero en ser atendido cuando hay cupo (FIFO).
+
+Atributos:
+  - codigoVuelo (String): Codigo unico del vuelo, como "AV101".
+  - origen (String): Ciudad de donde sale el avion.
+  - destino (String): Ciudad a donde va el avion.
+  - capacidadMaxima (int): Cuantos asientos tiene el vuelo en total.
+  - listaPasajeros (ArrayList<Pasajero>): Pasajeros con reserva confirmada.
+  - listaEspera (Queue<Pasajero>): Cola de pasajeros esperando un cupo.
+
+Metodos:
+  - Vuelo(codigoVuelo, origen, destino, capacidadMaxima)
+      Constructor. Crea el vuelo con sus datos y las listas vacias.
+
+  - getCodigoVuelo() -> String
+      Devuelve el codigo del vuelo.
+
+  - getOrigen() -> String
+      Devuelve la ciudad de origen.
+
+  - getDestino() -> String
+      Devuelve la ciudad de destino.
+
+  - getCapacidadMaxima() -> int
+      Devuelve cuantos asientos tiene el vuelo en total.
+
+  - getListaPasajeros() -> ArrayList<Pasajero>
+      Devuelve la lista de pasajeros confirmados.
+
+  - getListaEspera() -> Queue<Pasajero>
+      Devuelve la cola de pasajeros en espera.
+
+  - estaLleno() -> boolean
+      Revisa si ya no quedan asientos libres. Devuelve true si el numero
+      de pasajeros confirmados iguala la capacidad maxima. Se usa para
+      decidir si un pasajero nuevo va directo al vuelo o a la lista de espera.
+
+  - agregarPasajero(Pasajero p) -> boolean
+      Intenta darle un asiento al pasajero. Si el vuelo esta lleno devuelve
+      false (no se pudo). Si hay cupo, lo mete en la lista y devuelve true.
+
+  - cancelarReserva(String documento) -> boolean
+      Busca al pasajero por su documento y lo quita de la lista de confirmados.
+      Devuelve true si lo encontro y elimino, false si ese pasajero no estaba
+      en este vuelo.
+
+  - agregarAListaEspera(Pasajero p) -> void
+      Pone al pasajero al final de la cola de espera. Es la operacion "enqueue"
+      de la cola: llega uno nuevo y se forma al final.
+
+  - siguienteEnEspera() -> Pasajero
+      Saca al primer pasajero de la cola de espera y lo devuelve. Es la
+      operacion "dequeue": el que lleva mas tiempo esperando es el primero
+      en ser atendido. Si la cola esta vacia devuelve null.
+
+  - tieneListaEspera() -> boolean
+      Devuelve true si hay al menos una persona formada en la cola de espera.
+
+  - buscarPasajeroPorDocumento(String documento) -> Pasajero
+      Busca dentro de los pasajeros confirmados de este vuelo al que tenga
+      el documento indicado. Si lo encuentra devuelve al pasajero, si no
+      devuelve null. Este metodo lo usa el metodo recursivo #4 para buscar
+      pasajero por documento en todos los vuelos.
+
+  - toString() -> String
+      Muestra un resumen del vuelo: codigo, ruta, capacidad, cuantos pasajeros
+      tiene y cuantos estan en lista de espera.
+
+
+================================================================================
+CLASE: Operacion.java
+================================================================================
+Archivo: src/Operacion.java
+
+Guarda la informacion de cada accion importante que se hace en el sistema
+(para el historial y la funcion de deshacer). Cada vez que se hace una reserva,
+una cancelacion o se agrega alguien a lista de espera, se crea un objeto
+Operacion y se apila en el historial.
+
+Atributos:
+  - tipo (String): Que tipo de accion fue. Puede ser:
+      "RESERVA"       - Se le dio un asiento a un pasajero.
+      "CANCELACION"   - Se le quito el asiento a un pasajero.
+      "LISTA_ESPERA"  - Se puso a un pasajero en la cola de espera.
+      "RESERVA_AUTO"  - Se le asigno automaticamente un cupo a alguien que
+                        estaba en lista de espera (pasa cuando otro cancela).
+  - documentoPasajero (String): El documento del pasajero involucrado.
+  - codigoVuelo (String): El codigo del vuelo donde paso la operacion.
+  - pasajero (Pasajero): Guardamos el objeto Pasajero completo porque lo
+    necesitamos cuando deshacemos una cancelacion (para poder volver a meter
+    al pasajero en el vuelo).
+
+Metodos:
+  - Operacion(tipo, documentoPasajero, codigoVuelo, pasajero)
+      Constructor. Recibe todos los datos de la operacion.
+
+  - getTipo() -> String
+      Devuelve que tipo de operacion fue.
+
+  - getDocumentoPasajero() -> String
+      Devuelve el documento del pasajero.
+
+  - getCodigoVuelo() -> String
+      Devuelve el codigo del vuelo.
+
+  - getPasajero() -> Pasajero
+      Devuelve el objeto Pasajero completo.
+
+  - toString() -> String
+      Muestra la operacion en texto, por ejemplo:
+      "RESERVA: Pasajero 12345 en vuelo AV101"
+
+
+================================================================================
+CLASE: Aerolinea.java
+================================================================================
+Archivo: src/Aerolinea.java
+
+Esta es la clase central del sistema. Maneja toda la logica: la lista de vuelos,
+la pila de historial para deshacer operaciones, y los 4 metodos recursivos que
+exige el proyecto.
+
+Atributos:
+  - vuelos (ArrayList<Vuelo>): Lista con todos los vuelos registrados.
+    Estructura: LISTA (ArrayList).
+  - historial (Deque<Operacion>): Pila donde se guarda cada operacion que
+    se hace, para poder deshacerla despues. Estructura: PILA (ArrayDeque
+    usada como pila con push/pop, LIFO).
+  - contadorIdPasajero (int): Contador que va incrementando para darle
+    a cada pasajero un id unico.
+
+Metodos generales:
+  - Aerolinea()
+      Constructor. Arranca con la lista de vuelos vacia, la pila de historial
+      vacia y el contador de ids en 1.
+
+  - registrarVuelo(Vuelo v) -> void
+      Agrega un vuelo nuevo a la lista.
+
+  - getVuelos() -> ArrayList<Vuelo>
+      Devuelve la lista de todos los vuelos.
+
+  - getSiguienteIdPasajero() -> int
+      Devuelve el id actual y lo incrementa para que el siguiente pasajero
+      tenga un id diferente.
+
+--- METODOS DE LA PILA (HISTORIAL Y DESHACER) ---
+
+  - registrarOperacion(tipo, documento, codigoVuelo, pasajero) -> void
+      Cada vez que se hace una reserva, cancelacion o se pone alguien en
+      lista de espera, este metodo crea un objeto Operacion y lo apila
+      (push) en la pila de historial. Asi queda registrado el orden en
+      que se hicieron las cosas.
+
+  - deshacerUltimaOperacion() -> Operacion
+      Saca (pop) la ultima operacion de la pila y la devuelve para que
+      el metodo deshacerOperacion() de Main la revierta. Si la pila esta
+      vacia devuelve null.
+
+  - hayHistorial() -> boolean
+      Devuelve true si hay operaciones en el historial para deshacer.
+
+  - mostrarHistorial() -> void
+      Imprime todas las operaciones del historial, empezando por la mas
+      reciente (que es la que esta en el tope de la pila) hasta la mas
+      antigua.
+
+--- METODOS RECURSIVOS LINEALES ---
+
+1. buscarVueloPorCodigoRecursivo(String codigo, int indice) -> Vuelo
+   Archivo: Aerolinea.java, linea 72
+   
+   Que hace: Busca un vuelo por su codigo recorriendo la lista de vuelos
+   de forma recursiva, uno por uno.
+   
+   Caso base: Si indice >= vuelos.size(), significa que ya revisamos todos
+   los vuelos y ninguno tenia ese codigo. Devolvemos null.
+   
+   Caso recursivo: Miramos el vuelo en la posicion 'indice'. Si su codigo
+   es el que buscamos, lo devolvemos. Si no, llamamos al mismo metodo con
+   indice+1 para revisar el siguiente vuelo.
+   
+   Es recursividad lineal porque en cada paso hacemos UNA sola llamada
+   recursiva. Es como ir revisando una fila de aviones uno por uno.
+
+2. contarPasajerosRecursivo(Vuelo vuelo, int indice) -> int
+   Archivo: Aerolinea.java, linea 89
+   
+   Que hace: Cuenta cuantos pasajeros tiene un vuelo recorriendo su lista
+   de forma recursiva.
+   
+   Caso base: Si indice >= lista.size(), ya no hay mas pasajeros que contar.
+   Devolvemos 0.
+   
+   Caso recursivo: Contamos 1 por el pasajero actual y le sumamos el
+   resultado de contar los que quedan (indice+1). Es como decir:
+   "este es uno, mas los que haya despues". La pila de llamadas va
+   sumando de a uno al ir regresando.
+   
+   Es recursividad lineal porque hacemos UNA sola llamada recursiva por paso.
+
+3. contarPasajerosPorDestinoRecursivo(String destino, int indiceVuelo) -> int
+   Archivo: Aerolinea.java, linea 104
+   
+   Que hace: Cuenta cuantos pasajeros viajan a un destino especifico
+   recorriendo todos los vuelos de forma recursiva.
+   
+   Caso base: Si indiceVuelo >= vuelos.size(), ya revisamos todos los vuelos.
+   Devolvemos 0.
+   
+   Caso recursivo: Miramos el vuelo actual. Si su destino coincide con el
+   que buscamos, contamos sus pasajeros usando el metodo recursivo #2 y se
+   lo sumamos al resultado de seguir revisando los vuelos restantes. Si el
+   destino no coincide, solo avanzamos al siguiente vuelo.
+   
+   Este metodo combina dos recursiones: la externa recorre vuelos y la
+   interna (contarPasajerosRecursivo) cuenta los pasajeros de cada vuelo
+   que va hacia ese destino. Sigue siendo lineal porque en cada paso del
+   recorrido de vuelos hacemos UNA sola llamada recursiva.
+
+4. buscarPasajeroPorDocumentoRecursivo(String documento, int indiceVuelo) -> Pasajero
+   Archivo: Aerolinea.java, linea 125
+   
+   Que hace: Busca un pasajero por su numero de documento revisando todos
+   los vuelos y sus listas de pasajeros de forma recursiva.
+   
+   Caso base 1: Si indiceVuelo >= vuelos.size(), ya revisamos todos los
+   vuelos y no lo encontramos. Devolvemos null.
+   
+   Caso base 2: Si en el vuelo actual encontramos al pasajero con ese
+   documento (usando buscarPasajeroPorDocumento del vuelo), lo devolvemos.
+   
+   Caso recursivo: Si el pasajero no esta en este vuelo, buscamos en el
+   siguiente vuelo llamando al metodo con indiceVuelo+1. Es como ir
+   revisando avion por avion hasta encontrar a la persona.
+   
+   Es recursividad lineal porque hacemos UNA sola llamada recursiva por paso.
+
+
+================================================================================
+CLASE: Main.java
+================================================================================
+Archivo: src/Main.java
+
+Esta es la clase que interactua con el usuario. Maneja todos los menus en
+consola y conecta lo que el usuario quiere hacer con la logica de Aerolinea.
+
+Atributos estaticos:
+  - aerolinea (Aerolinea): El objeto principal del sistema donde esta toda
+    la informacion (vuelos, historial, etc.).
+  - scanner (Scanner): Para leer lo que el usuario escribe por teclado.
+
+Metodos:
+
+--- METODO PRINCIPAL ---
+
+  - main(String[] args) -> void
+      Linea 18. Punto de entrada del programa. Muestra el menu principal
+      en un ciclo y redirige a los submenus segun lo que elija el usuario.
+
+--- MENUS ---
+
+  - mostrarMenuPrincipal() -> void
+      Linea 44. Imprime el menu principal con las 5 opciones disponibles
+      y la opcion de salir.
+
+  - menuVuelos() -> void
+      Submenu para gestionar vuelos: crear vuelo nuevo, ver todos los
+      vuelos, buscar vuelo por codigo (recursivo).
+
+  - menuPasajerosReservas() -> void
+      Submenu para pasajeros y reservas: registrar pasajero en un vuelo,
+      cancelar reserva, ver pasajeros de un vuelo, ver lista de espera.
+
+  - menuListasEspera() -> void
+      Submenu para las colas de espera: poner pasajero en lista de espera,
+      darle cupo al siguiente en la fila, ver lista de espera.
+
+  - menuHistorialDeshacer() -> void
+      Submenu para la pila: ver que operaciones se han hecho, deshacer
+      la ultima operacion.
+
+  - menuReportes() -> void
+      Submenu para reportes con recursividad: contar pasajeros de un vuelo,
+      contar pasajeros por destino, buscar pasajero por documento en
+      todos los vuelos.
+
+--- FUNCIONALIDADES DE VUELOS ---
+
+  - registrarVuelo() -> void
+      Pide al usuario el codigo, origen, destino y capacidad del vuelo.
+      Antes de crearlo verifica que no exista otro vuelo con el mismo
+      codigo (usando la busqueda recursiva). Si la capacidad es 0 o
+      negativa, la rechaza. Si todo esta bien, crea el vuelo y lo agrega
+      a la lista de la aerolinea.
+
+  - listarVuelos() -> void
+      Muestra todos los vuelos registrados. Si no hay ninguno avisa que
+      la lista esta vacia.
+
+  - buscarVueloPorCodigo() -> void
+      Pide un codigo al usuario y usa el metodo recursivo
+      buscarVueloPorCodigoRecursivo de Aerolinea para encontrarlo.
+      Muestra el vuelo si lo encuentra o un mensaje si no existe.
+
+--- FUNCIONALIDADES DE PASAJEROS Y RESERVAS ---
+
+  - registrarPasajeroEnVuelo() -> void
+      Pide el codigo del vuelo y los datos del pasajero. Si el vuelo esta
+      lleno, automaticamente pone al pasajero en la cola de espera y
+      registra la operacion "LISTA_ESPERA" en la pila. Si hay cupo, lo
+      agrega como pasajero confirmado y registra "RESERVA" en la pila.
+
+  - cancelarReserva() -> void
+      Pide el codigo del vuelo y el documento del pasajero. Lo busca en
+      la lista del vuelo y lo quita. Registra "CANCELACION" en la pila.
+      Despues, si hay alguien en la lista de espera, le asigna
+      automaticamente el asiento que se libero y registra "RESERVA_AUTO"
+      en la pila. Asi la lista de espera se va procesando sola.
+
+  - mostrarPasajerosDeVuelo() -> void
+      Muestra todos los pasajeros confirmados de un vuelo, indicando
+      cuantos asientos estan ocupados de cuantos hay en total.
+
+  - mostrarListaEsperaDeVuelo() -> void
+      Muestra los pasajeros que estan en la cola de espera de un vuelo,
+      enumerados por posicion en la fila.
+
+--- FUNCIONALIDADES DE LISTAS DE ESPERA ---
+
+  - agregarAListaEspera() -> void
+      Agrega un pasajero directamente a la cola de espera de un vuelo,
+      sin importar si el vuelo esta lleno o no. Registra "LISTA_ESPERA"
+      en la pila.
+
+  - procesarListaEspera() -> void
+      Si hay alguien en la cola de espera y el vuelo tiene cupo libre,
+      saca al primero de la cola (dequeue) y lo mete como pasajero
+      confirmado. Si el vuelo esta lleno avisa que primero se tiene
+      que cancelar una reserva. Registra "RESERVA_AUTO" en la pila.
+
+--- FUNCIONALIDADES DE HISTORIAL Y DESHACER ---
+
+  - deshacerOperacion() -> void
+      Saca la ultima operacion de la pila de historial y la revierte
+      segun que tipo fue:
+        - "RESERVA" o "RESERVA_AUTO": Quita al pasajero del vuelo
+          (como si nunca hubiera reservado).
+        - "CANCELACION": Vuelve a meter al pasajero en el vuelo. Si el
+          vuelo ya esta lleno otra vez, lo pone en lista de espera.
+        - "LISTA_ESPERA": Saca al pasajero de la cola de espera usando
+          el metodo auxiliar removerDeCola.
+
+  - removerDeCola(Vuelo vuelo, String documento) -> boolean
+      Metodo auxiliar para sacar a un pasajero especifico de la cola de
+      espera. Como las colas (Queue) no dejan eliminar un elemento por
+      valor directamente, lo que hacemos es: vaciar la cola en una lista
+      temporal, saltarnos al pasajero que queremos sacar, y volver a
+      encolar los demas en el mismo orden. Devuelve true si lo encontro
+      y saco, false si no estaba.
+
+--- FUNCIONALIDADES DE REPORTES (RECURSIVIDAD) ---
+
+  - contarPasajerosDeVuelo() -> void
+      Pide un codigo de vuelo y usa el metodo recursivo
+      contarPasajerosRecursivo para decir cuantos pasajeros tiene el
+      vuelo y cuantos asientos libres quedan.
+
+  - contarPasajerosPorDestino() -> void
+      Pide un destino y usa el metodo recursivo
+      contarPasajerosPorDestinoRecursivo para decir cuantos pasajeros
+      van hacia ese destino en todos los vuelos del sistema.
+
+  - buscarPasajeroPorDocumentoGlobal() -> void
+      Pide un numero de documento y usa el metodo recursivo
+      buscarPasajeroPorDocumentoRecursivo para buscar a ese pasajero
+      en todos los vuelos registrados.
+
+--- UTILIDADES ---
+
+  - leerEntero(String mensaje) -> int
+      Lee lo que el usuario escribe y lo convierte a numero entero.
+      Si el usuario escribe algo que no es un numero (como letras),
+      le muestra un mensaje de error y le vuelve a pedir en vez de
+      crashear el programa. Se usa en todos los menus del sistema.
+
+
+================================================================================
+RESUMEN DE ESTRUCTURAS DE DATOS UTILIZADAS
+================================================================================
+
+LISTA (ArrayList):
+  - Aerolinea.vuelos: La lista de todos los vuelos registrados en el sistema.
+  - Vuelo.listaPasajeros: Los pasajeros que ya tienen asiento confirmado en
+    cada vuelo. Se puede agregar, quitar y buscar libremente.
+
+COLA (Queue implementada con LinkedList):
+  - Vuelo.listaEspera: La fila de pasajeros esperando un cupo en cada vuelo.
+    Funciona con FIFO (primero en entrar, primero en salir). Cuando se libera
+    un asiento, el que lleva mas tiempo esperando es el primero en recibirlo.
+
+PILA (Deque implementada con ArrayDeque):
+  - Aerolinea.historial: El historial de operaciones del sistema. Funciona con
+    LIFO (ultima en entrar, primera en salir). Cada accion se apila con push()
+    y se deshace con pop(). Asi la ultima cosa que se hizo es la primera en
+    revertirse, como un Ctrl+Z.
+
+
+================================================================================
+RESUMEN DE METODOS RECURSIVOS LINEALES
+================================================================================
+
+1. buscarVueloPorCodigoRecursivo -> Aerolinea.java, linea 72
+   Recorre la lista de vuelos buscando uno por codigo. En cada paso hace
+   una sola llamada recursiva (lineal).
+
+2. contarPasajerosRecursivo -> Aerolinea.java, linea 89
+   Cuenta los pasajeros de un vuelo recorriendo su lista. En cada paso
+   hace una sola llamada recursiva (lineal).
+
+3. contarPasajerosPorDestinoRecursivo -> Aerolinea.java, linea 104
+   Cuenta pasajeros que van a un destino recorriendo todos los vuelos.
+   En cada paso hace una sola llamada recursiva (lineal). Internamente
+   usa el metodo #2 para contar los pasajeros de cada vuelo.
+
+4. buscarPasajeroPorDocumentoRecursivo -> Aerolinea.java, linea 125
+   Busca un pasajero por documento recorriendo todos los vuelos. En cada
+   paso hace una sola llamada recursiva (lineal).
+
+
+================================================================================
+COMO COMPILAR Y EJECUTAR
+================================================================================
+
+1. Abrir una terminal en la carpeta Aerolinea/
+2. Compilar todos los archivos:
+   javac -encoding UTF-8 -d out src/*.java
+3. Ejecutar el programa:
+   java -cp out Main
+4. Seguir las opciones del menu por consola.
